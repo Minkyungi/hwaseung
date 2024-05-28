@@ -23,7 +23,7 @@ $(function () {
     $(this).siblings().find($mGnbSubmenu).stop().slideUp(duration);
   });
 
-  $btnMenu.on('click', function () {
+  $btnMmenu.on('click', function () {
     $mSubmenu.addClass('active');
     $dim.fadeIn(duration);
   });
@@ -46,6 +46,7 @@ $(function () {
   // 마우스가 메뉴에 나가면(mouseleave)
   $header.on('mouseleave', function () {
     $menu.removeClass('on');
+    $submenu.find('li').removeClass('on');
     closeMenu();
   });
   // 메뉴 버튼을 클릭했을 때
@@ -74,7 +75,11 @@ $(function () {
       $header.removeClass('w-bg');
     }
   }
-
+  $window.on('resize', function () {
+    closeMenu();
+    $menu.removeClass('on');
+    $submenu.find('li').removeClass('on');
+  });
   // 스크롤 이벤트
   $window.on('scroll', function () {
     // 얼마나 스크롤 되었는지 값을 구해서 저장
