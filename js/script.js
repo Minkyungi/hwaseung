@@ -106,4 +106,27 @@ $(function () {
     duration: 600,
     offset: 200,
   });
+
+  // 지속가능경영 슬라이더
+  const managementList = new Swiper('.management-list', {
+    autoplay: {
+      delay: 3000,
+    },
+    // loop: true,
+    // speed: 1000, // 기본값 300ms
+
+    slidesPerView: 1,
+    centeredSlides: true,
+    // spaceBetween: 20,
+
+    navigation: {
+      nextEl: '.btn-next',
+      prevEl: '.btn-prev',
+    },
+    breakpoints: {
+      1024: {
+        slidesPerView: 4, // 가로 크기 675px을 위해 (2700 / 4)
+      },
+    },
+  });
 });

@@ -24,7 +24,9 @@ hr,
   overflow: hidden;
   color: rect(0, 0, 0, 0);
 }
-
+img {
+  max-width: 100%;
+}
 body {
   font: 2rem 'Pretendard', sans-serif;
 }
