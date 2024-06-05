@@ -82,7 +82,11 @@ $(function () {
     $menu.removeClass('on');
     $submenu.find('li').removeClass('on');
   });
-  $window.on('resize', setWhiteBackground);
+  $window.on('resize', function () {
+    setWhiteBackground();
+    setManagementHeight();
+  });
+
   // 스크롤 이벤트
   $window.on('scroll', function () {
     // 얼마나 스크롤 되었는지 값을 구해서 저장
@@ -111,6 +115,7 @@ $(function () {
   const managementList = new Swiper('.management-list', {
     autoplay: {
       delay: 3000,
+      disableOnInteraction: false,
     },
     // loop: true,
     // speed: 1000, // 기본값 300ms
@@ -118,6 +123,11 @@ $(function () {
     slidesPerView: 1,
     centeredSlides: true,
     // spaceBetween: 20,
+
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
 
     navigation: {
       nextEl: '.btn-next',
@@ -128,5 +138,40 @@ $(function () {
         slidesPerView: 4, // 가로 크기 675px을 위해 (2700 / 4)
       },
     },
+    on: {
+      autoplayTimeLeft(swiper, timeLeft, percentage) {
+        console.log(timeLeft, percentage);
+        // timeleft: 남은 시간(ms)
+        // percentage: 진행상태를 1~0 사이의 값으로 -->
+        const percentageValue = (1 - percentage) * 100 + '%';
+        document.querySelector('.progress-bar').style.width = percentageValue;
+      },
+    },
   });
+
+  const $btnPause = $('.btn-pause');
+  const $btnPlay = $('.btn-play');
+  $btnPlay.hide();
+
+  $btnPause.on('click', function () {
+    managementList.autoplay.stop();
+    $btnPause.hide();
+    $btnPlay.show();
+  });
+  $btnPlay.on('click', function () {
+    managementList.autoplay.start();
+    $btnPlay.hide();
+    $btnPause.show();
+  });
+  // 지속가능영역의 세로크기 결정
+  setManagementHeight();
+
+  function setManagementHeight() {
+    const titleHeight = $('.management .sec-title').outerHeight();
+    const sliderHeight = $('.management-list-wrap').outerHeight();
+    const managementHiehgt = titleHeight + sliderHeight + 180;
+    $('.management').css({
+      height: `calc(${managementHiehgt}px+12vw)`,
+    });
+  }
 });
